@@ -1,5 +1,5 @@
 import SearchPage from '../../pages/search-page';
-import { PlaceCardInfo } from '../../components/place-card/place-card.types'
+import { PlaceCardInfo } from '../../components/place-card/place-card.types';
 
 type AppScreenProps = {
   cardCount: number;
