@@ -45,4 +45,4 @@ export const placeCardMock: PlaceCardInfo = {
       img: 'img/apartment-01.jpg',
     },
   ]
-} as const;
+};
