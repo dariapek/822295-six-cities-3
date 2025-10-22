@@ -1,18 +1,18 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../header/header';
-import { APP_ROUTE } from '../../const';
+import { AppRoute } from '../../const';
 
-const EXTRA_PAGE_CLASSNAME = {
-  [APP_ROUTE.ROOT]: 'page--gray page--main',
-  [APP_ROUTE.FAVORITE]: 'page--favorites-empty'
+const ExtraPageClassname = {
+  [AppRoute.Root]: 'page--gray page--main',
+  [AppRoute.Favorites]: 'page--favorites-empty'
 } as const;
 
 function getExtraPageClassname(location: string): string {
-  if (!(location in EXTRA_PAGE_CLASSNAME)) {
+  if (!(location in ExtraPageClassname)) {
     return '';
   }
 
-  return EXTRA_PAGE_CLASSNAME[location as keyof typeof EXTRA_PAGE_CLASSNAME];
+  return ExtraPageClassname[location as keyof typeof ExtraPageClassname];
 }
 
 function Layout(): JSX.Element {

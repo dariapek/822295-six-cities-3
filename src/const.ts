@@ -1,13 +1,13 @@
-export enum APP_ROUTE {
-  ROOT = '/',
-  LOGIN = '/login',
-  FAVORITE = '/favorites',
-  OFFER = '/offer/:id',
-  NOT_FOUND = '*',
+export enum AppRoute {
+  Root = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer/:id',
+  NotFound = '*',
 }
 
-export enum AUTHORIZATION_STATUS {
-  AUTH = 'AUTH',
-  NO_AUTH = 'NO_AUTH',
-  UNKNOWN = 'UNKNOWN',
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
 }

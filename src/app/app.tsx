@@ -1,6 +1,6 @@
 import Layout from '../components/layout/layout';
 import PrivateRoute from '../components/private-route/private-route';
-import { APP_ROUTE, AUTHORIZATION_STATUS } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { FavoritesPage } from '../pages/favorites-page';
 import { LoginPage } from '../pages/login-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
@@ -18,34 +18,34 @@ function App({ offers }: AppScreenProps): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route
-          path={APP_ROUTE.ROOT}
+          path={AppRoute.Root}
           element={<Layout />}
         >
           <Route
-            path={APP_ROUTE.ROOT}
+            path={AppRoute.Root}
             element={<SearchPage offers={offers} />}
           />
           <Route
-            path={APP_ROUTE.OFFER}
+            path={AppRoute.Offer}
             element={<OfferPage />}
           />
           <Route
-            path={APP_ROUTE.FAVORITE}
+            path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AUTHORIZATION_STATUS.NO_AUTH}
+                authorizationStatus={AuthorizationStatus.NoAuth}
               >
                 <FavoritesPage />
               </PrivateRoute>
             }
           />
           <Route
-            path={APP_ROUTE.NOT_FOUND}
+            path={AppRoute.NotFound}
             element={<NotFoundPage />}
           />
         </Route>
         <Route
-          path={APP_ROUTE.LOGIN}
+          path={AppRoute.Login}
           element={<LoginPage />}
         />
       </Routes>
