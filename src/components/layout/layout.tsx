@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import Header from '../header/header';
-import { AppRoute } from '../../const';
+import Header from '@/components/header/header';
+import { AppRoute } from '@/const';
 
 const ExtraPageClassname = {
   [AppRoute.Root]: 'page--gray page--main',

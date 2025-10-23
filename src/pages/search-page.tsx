@@ -1,6 +1,6 @@
-import Locations from '../components/locations/locations';
-import PlaceCard from '../components/place-card/place-card';
-import { Offer } from '../types/offer';
+import Locations from '@/components/locations/locations';
+import PlaceCard from '@/components/place-card/place-card';
+import { Offer } from '@/types/offer';
 
 type SearchPageProp = {
   offers: Array<Offer>;
@@ -8,7 +8,6 @@ type SearchPageProp = {
 
 function SearchPage({ offers }: SearchPageProp): JSX.Element {
   return (
-
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
