@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { OffersMock } from './mock/place-card.mock';
-import App from './app/app';
+import App from '@/app';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,8 +8,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      offers={OffersMock}
-    />
+    <App/>
   </React.StrictMode>
 );

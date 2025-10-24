@@ -1,5 +1,5 @@
-import { Offer } from '../../types/offer';
-import { calculateOfferRating } from '../../utils/offer.utils';
+import { Offer } from '@/types/offer';
+import { calculateOfferRating } from '@/utils/offer.utils';
 
 
 type PlaceCardProp = {
