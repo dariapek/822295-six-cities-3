@@ -3,12 +3,13 @@ import PlaceCard from '../place-card/place-card';
 
 type PlaceCardListProp = {
   offers: Array<OfferListItem>;
+  onChangeCardState: (state: boolean) => void;
 }
 
-function PlaceCardList({ offers }: PlaceCardListProp): JSX.Element {
+function PlaceCardList({ offers, onChangeCardState }: PlaceCardListProp): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => <PlaceCard key={offer.id} offer={offer} />)}
+      {offers.map((offer) => <PlaceCard key={offer.id} offer={offer} onChangeCardState={onChangeCardState} />)}
     </div>
   );
 }

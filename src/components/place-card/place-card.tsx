@@ -4,16 +4,16 @@ import { calculateOfferRating } from '@/utils/offer.utils';
 
 type PlaceCardProp = {
   offer: OfferListItem;
+  onChangeCardState: (state: boolean) => void;
 }
 
-function PlaceCard({ offer }: PlaceCardProp): JSX.Element {
+function PlaceCard({ offer, onChangeCardState }: PlaceCardProp): JSX.Element {
   const { title, type, price, rating, previewImage } = offer;
-
-  function handleActiveCard(): void {}
 
   return (
     <article
-      onMouseEnter={handleActiveCard}
+      onMouseEnter={() => onChangeCardState(true)}
+      onMouseLeave={() => onChangeCardState(false)}
       className="cities__card place-card"
     >
       <div className="place-card__mark">

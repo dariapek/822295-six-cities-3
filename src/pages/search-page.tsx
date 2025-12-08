@@ -1,12 +1,15 @@
 import Locations from '@/components/locations/locations';
-import PlaceCardList from '@/components/place-card-list';
+import PlaceCardList from '@/components/place-card-list/place-card-list';
 import { OfferListItem } from '@/types/offer';
+import { useState } from 'react';
 
 type SearchPageProp = {
   offers: Array<OfferListItem>;
 }
 
 function SearchPage({ offers }: SearchPageProp): JSX.Element {
+  const [cardState, setCardState] = useState(false);
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -33,7 +36,7 @@ function SearchPage({ offers }: SearchPageProp): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <PlaceCardList offers={offers} />
+            <PlaceCardList offers={offers} onChangeCardState={(state: boolean) => setCardState(state)} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>
