@@ -10,6 +10,7 @@ type MainPageProp = {
 }
 
 function MainPage({ offers }: MainPageProp): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedOffer, setSelectedOffer] = useState<OfferListItem | null>(null);
 
   return (
