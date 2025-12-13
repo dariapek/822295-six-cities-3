@@ -3,6 +3,8 @@ import Mark from '../mark/mark';
 import Bookmark from '../bookmark/bookmark';
 import clsx from 'clsx';
 import Rating from '../rating/rating';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute } from '@/const';
 
 type PlaceCardProp = {
   offer: OfferListItem;
@@ -77,7 +79,7 @@ function PlaceCard({ offer, viewType, onChangeCardState = () => { } }: PlaceCard
         </div>
         <Rating rating={rating} blockClass={'place-card'} />
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={generatePath(AppRoute.Offer, { id: offer.id })}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

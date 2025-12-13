@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
       },
       {
         path: AppRoute.Offer,
-        element: <OfferPage offer={OffersMock[0]} />,
+        element: <OfferPage offers={OffersMock} />,
       },
       {
         path: AppRoute.Favorites,

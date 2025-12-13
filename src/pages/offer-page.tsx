@@ -5,11 +5,13 @@ import Mark from '@/components/mark/mark';
 import NearPlaceList from '@/components/near-place-list/near-place-list';
 import Rating from '@/components/rating/rating';
 import ReviewsForm from '@/components/reviews-form/reviews-form';
+import { AppRoute } from '@/const';
 import { OfferListItem } from '@/types/offer';
 import { capitalize } from '@/utils/offer.utils';
+import { Navigate, useLocation } from 'react-router-dom';
 
 type OfferPageProps = {
-  offer: OfferListItem;
+  offers: OfferListItem[];
 };
 
 const galleryImages: string[] = [
@@ -21,7 +23,14 @@ const galleryImages: string[] = [
   'img/apartment-01.jpg',
 ];
 
-function OfferPage({ offer }: OfferPageProps): JSX.Element {
+function OfferPage({ offers }: OfferPageProps): JSX.Element {
+  const offerId = useLocation().pathname.replace('/offer/', '');
+  const currentOffer = offers.find((offer) => (offer.id === offerId));
+
+  if (!currentOffer) {
+    return <Navigate to={AppRoute.NotFound} />;
+  }
+
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
@@ -29,18 +38,18 @@ function OfferPage({ offer }: OfferPageProps): JSX.Element {
 
         <div className="offer__container container">
           <div className="offer__wrapper">
-            {offer.isPremium && <Mark containerClass={'offer__mark'} />}
+            {currentOffer.isPremium && <Mark containerClass={'offer__mark'} />}
 
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
-                {offer.title}
+                {currentOffer.title}
               </h1>
               <Bookmark isFavorite={false} blockClass={'offer'} />
             </div>
-            <Rating rating={offer.rating} blockClass={'offer'} isValueVisible />
+            <Rating rating={currentOffer.rating} blockClass={'offer'} isValueVisible />
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                {capitalize(offer.type)}
+                {capitalize(currentOffer.type)}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
                 3 Bedrooms
@@ -50,7 +59,7 @@ function OfferPage({ offer }: OfferPageProps): JSX.Element {
               </li>
             </ul>
             <div className="offer__price">
-              <b className="offer__price-value">&euro;{offer.price}</b>
+              <b className="offer__price-value">&euro;{currentOffer.price}</b>
               <span className="offer__price-text">&nbsp;night</span>
             </div>
             <div className="offer__inside">
@@ -139,7 +148,7 @@ function OfferPage({ offer }: OfferPageProps): JSX.Element {
         </div>
         <CityMap blockName={'offer'} />
       </section>
-      <NearPlaceList offers={[offer]} />
+      <NearPlaceList offers={offers} />
     </main>
   );
 }

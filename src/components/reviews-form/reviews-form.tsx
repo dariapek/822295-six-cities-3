@@ -36,7 +36,7 @@ function ReviewsForm(): JSX.Element {
       review: '',
     });
   };
-  
+
   const onFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     cleanUpForm();

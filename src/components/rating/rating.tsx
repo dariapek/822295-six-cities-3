@@ -15,7 +15,7 @@ function Rating({ rating, blockClass, isValueVisible = false }: RatingProps): JS
         <span className="visually-hidden">Rating</span>
       </div>
 
-      {isValueVisible && (<span className="offer__rating-value rating__value">4.8</span>)}
+      {isValueVisible && (<span className="offer__rating-value rating__value">{rating}</span>)}
     </div>
   );
 }
