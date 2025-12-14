@@ -10,8 +10,7 @@ type MainPageProp = {
 }
 
 function MainPage({ offers }: MainPageProp): JSX.Element {
-  // @ts-ignore
-  const [selectedOffer, setSelectedOffer] = useState<OfferListItem | null>(null);
+  const [, setSelectedOffer] = useState<OfferListItem | null>(null);
 
   return (
     <main className="page__main page__main--index">
