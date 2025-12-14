@@ -1,12 +1,12 @@
 import Layout from '@/components/layout/layout';
 import PrivateRoute from '@/components/private-route/private-route';
 import { AppRoute, AuthorizationStatus } from '@/const';
-import { OffersMock } from '@/mock/place-card.mock';
-import { FavoritesPage } from '@/pages/favorites-page';
-import { LoginPage } from '@/pages/login-page';
+import { OffersMock } from '@/mock/offers.mock';
+import FavoritesPage from '@/pages/favorites-page';
+import LoginPage from '@/pages/login-page';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
-import { OfferPage } from '@/pages/offer-page';
-import SearchPage from '@/pages/search-page';
+import OfferPage from '@/pages/offer-page';
+import MainPage from '@/pages/main-page';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
@@ -16,17 +16,17 @@ export const router = createBrowserRouter([
     children: [
       {
         path: AppRoute.Root,
-        element: <SearchPage offers={OffersMock} />,
+        element: <MainPage offers={OffersMock} />,
       },
       {
         path: AppRoute.Offer,
-        element: <OfferPage />,
+        element: <OfferPage offers={OffersMock} />,
       },
       {
         path: AppRoute.Favorites,
         element: (
-          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-            <FavoritesPage />
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <FavoritesPage offers={OffersMock} />
           </PrivateRoute>
         ),
       },

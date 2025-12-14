@@ -9,7 +9,7 @@ export interface City {
   location: Location;
 }
 
-export type Offer = {
+export type OfferListItem = {
   id: string;
   title: string;
   type: string;

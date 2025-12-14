@@ -4,7 +4,7 @@ import { AppRoute } from '@/const';
 
 const ExtraPageClassname = {
   [AppRoute.Root]: 'page--gray page--main',
-  [AppRoute.Favorites]: 'page--favorites-empty'
+  // [AppRoute.Favorites]: 'page--favorites-empty'
 } as const;
 
 function getExtraPageClassname(location: string): string {
