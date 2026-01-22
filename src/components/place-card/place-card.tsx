@@ -9,7 +9,7 @@ import { AppRoute } from '@/const';
 type PlaceCardProp = {
   offer: OfferListItem;
   viewType: 'city' | 'favorite' | 'nearby';
-  onChangeCardState?: (offer: OfferListItem | null) => void;
+  onOfferHover?: (offerId: string | undefined) => void;
 }
 
 interface ViewTypeClass {
@@ -54,13 +54,13 @@ const imageSize: Record<PlaceCardProp['viewType'], ImageSize> = {
   }
 };
 
-function PlaceCard({ offer, viewType, onChangeCardState = () => { } }: PlaceCardProp): JSX.Element {
+function PlaceCard({ offer, viewType, onOfferHover = () => { } }: PlaceCardProp): JSX.Element {
   const { title, type, price, rating, previewImage } = offer;
 
   return (
     <article
-      onMouseEnter={() => onChangeCardState?.(offer)}
-      onMouseLeave={() => onChangeCardState?.(null)}
+      onMouseEnter={() => onOfferHover?.(offer.id)}
+      onMouseLeave={() => onOfferHover?.(undefined)}
       className={viewTypeClass[viewType].article}
     >
       {offer.isPremium && <Mark containerClass={'place-card__mark'} />}

@@ -7,6 +7,7 @@ import { AppRoute } from '@/const';
 import { OfferListItem } from '@/types/offer';
 import { getOffersByCity, isLocationName } from '@/utils/utils';
 import clsx from 'clsx';
+import { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 
@@ -19,9 +20,17 @@ function MainPage({ offers }: MainPageProp): JSX.Element {
   const amsterdamOffers = getOffersByCity(offers, 'Amsterdam');
   const isOffersEmpty = amsterdamOffers.length === 0;
 
+  const [selectedOffer, setSelectedOffer] = useState<OfferListItem | undefined>(undefined);
+
   if (!isLocationName(city)) {
     return <Navigate to={AppRoute.NotFound} replace />;
   }
+
+  const handleOfferHover = (offerId: string | undefined) => {
+    const currentOffer = offerId ? offers.find((offer) => offer.id === offerId) : undefined;
+
+    setSelectedOffer(currentOffer);
+  };
 
   return (
     <div className={clsx('page', 'page--gray', 'page--main')}>
@@ -31,10 +40,10 @@ function MainPage({ offers }: MainPageProp): JSX.Element {
         <Locations currentCity={city} />
         <div className="cities">
           <div className="cities__places-container container">
-            {isOffersEmpty ? <PlacesEmpty/ > : <Places offers={offers} city={city} />}
+            {isOffersEmpty ? <PlacesEmpty /> : <Places offers={offers} city={city} onOfferHover={handleOfferHover} />}
 
             <div className="cities__right-section">
-              {!isOffersEmpty && <CityMap blockName={'cities'} cityOffersList={amsterdamOffers} />}
+              {!isOffersEmpty && <CityMap blockName={'cities'} cityOffersList={amsterdamOffers} selectedOffer={selectedOffer} />}
             </div>
           </div>
         </div>

@@ -1,14 +1,15 @@
-import { FirstElementIndex, URL_MARKER_DEFAULT } from '@/const';
+import { FirstElementIndex, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '@/const';
 import useMap from '@/hooks/useMap';
 import { OfferListItem } from '@/types/offer';
 import clsx from 'clsx';
 import { useEffect, useRef } from 'react';
-import leaflet from 'leaflet';
+import { Icon, layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 type CityMapProps = {
   blockName: 'cities' | 'offer';
   cityOffersList: Array<OfferListItem>;
+  selectedOffer?: OfferListItem | undefined;
 }
 
 const size = {
@@ -16,35 +17,48 @@ const size = {
   offer: { width: '100%', height: '579px' },
 };
 
-function CityMap({ blockName, cityOffersList }: CityMapProps): JSX.Element {
+const defaultCustomIcon = new Icon({
+  iconUrl: URL_MARKER_DEFAULT,
+  iconSize: [27, 39],
+  iconAnchor: [14, 39],
+});
+
+
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [27, 39],
+  iconAnchor: [14, 39],
+});
+
+function CityMap({ blockName, cityOffersList, selectedOffer }: CityMapProps): JSX.Element {
   const placeClass: string = `${blockName}__map`;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityOffersList[FirstElementIndex].city);
 
-
-  const points = cityOffersList.map((offer) => offer.location);
-
-  const defaultCustomIcon = leaflet.icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [27, 39],
-    iconAnchor: [14, 39],
-  });
-
   useEffect(() => {
     if (map) {
-      points.forEach((point) => {
-        leaflet
-          .marker({
-            lat: point.latitude,
-            lng: point.longitude,
-          }, {
-            icon: defaultCustomIcon,
-          })
-          .addTo(map);
+      const markerLayer = layerGroup().addTo(map);
+      cityOffersList.forEach((offer) => {
+        const marker = new Marker({
+          lat: offer.location.latitude,
+          lng: offer.location.longitude
+        });
+
+        marker
+          .setIcon(
+            selectedOffer !== undefined && offer.id === selectedOffer.id
+              ? currentCustomIcon
+              : defaultCustomIcon
+          )
+          .addTo(markerLayer);
       });
+
+      return () => {
+        map.removeLayer(markerLayer);
+      };
     }
-  }, [map, points, defaultCustomIcon]);
+  }, [map, cityOffersList, selectedOffer]);
 
 
   return (
