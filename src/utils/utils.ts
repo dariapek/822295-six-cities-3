@@ -1,6 +1,5 @@
 import { LocationName, LocationNames } from '@/const';
 import { OfferListItem } from '@/types/offer';
-import { c } from 'vitest/dist/reporters-5f784f42.js';
 
 export function calculateOfferRating(rating: number, maxRating = 5): number {
   return (rating / maxRating) * 100;
