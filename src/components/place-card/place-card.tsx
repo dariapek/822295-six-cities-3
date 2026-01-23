@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import Rating from '../rating/rating';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '@/const';
+import { capitalizeFirst } from '@/utils/utils';
 
 type PlaceCardProp = {
   offer: OfferListItem;
@@ -81,7 +82,7 @@ function PlaceCard({ offer, viewType, onOfferHover = () => { } }: PlaceCardProp)
         <h2 className="place-card__name">
           <Link to={generatePath(AppRoute.Offer, { id: offer.id })}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizeFirst(type)}</p>
       </div>
     </article>
   );
