@@ -9,7 +9,7 @@ import 'leaflet/dist/leaflet.css';
 type CityMapProps = {
   blockName: 'cities' | 'offer';
   cityOffersList: Array<OfferListItem>;
-  selectedOffer?: OfferListItem | undefined;
+  selectedOfferId?: string | undefined;
 }
 
 const size = {
@@ -30,7 +30,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [14, 39],
 });
 
-function CityMap({ blockName, cityOffersList, selectedOffer }: CityMapProps): JSX.Element {
+function CityMap({ blockName, cityOffersList, selectedOfferId }: CityMapProps): JSX.Element {
   const placeClass: string = `${blockName}__map`;
 
   const mapRef = useRef(null);
@@ -38,7 +38,9 @@ function CityMap({ blockName, cityOffersList, selectedOffer }: CityMapProps): JS
 
   useEffect(() => {
     if (map) {
+      const city = cityOffersList[FirstElementIndex].city;
       const markerLayer = layerGroup().addTo(map);
+
       cityOffersList.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -47,18 +49,23 @@ function CityMap({ blockName, cityOffersList, selectedOffer }: CityMapProps): JS
 
         marker
           .setIcon(
-            selectedOffer !== undefined && offer.id === selectedOffer.id
+            offer.id === selectedOfferId
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(markerLayer);
+
+        map.setView(
+          [city.location.latitude, city.location.longitude],
+          city.location.zoom
+        );
       });
 
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, cityOffersList, selectedOffer]);
+  }, [map, cityOffersList, selectedOfferId]);
 
 
   return (

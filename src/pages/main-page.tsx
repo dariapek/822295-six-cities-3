@@ -20,16 +20,14 @@ function MainPage({ offers }: MainPageProp): JSX.Element {
   const offersByCity = getOffersByCity(offers, city);
   const isOffersEmpty = offersByCity.length === 0;
 
-  const [selectedOffer, setSelectedOffer] = useState<OfferListItem | undefined>(undefined);
+  const [selectedOfferId, setSelectedOfferId] = useState<string | undefined>(undefined);
 
   if (!isLocationName(city)) {
     return <Navigate to={AppRoute.NotFound} replace />;
   }
 
   const handleOfferHover = (offerId: string | undefined) => {
-    const currentOffer = offerId ? offers.find((offer) => offer.id === offerId) : undefined;
-
-    setSelectedOffer(currentOffer);
+    setSelectedOfferId(offerId);
   };
 
   return (
@@ -43,7 +41,7 @@ function MainPage({ offers }: MainPageProp): JSX.Element {
             {isOffersEmpty ? <PlacesEmpty /> : <Places offers={offersByCity} city={city} onOfferHover={handleOfferHover} />}
 
             <div className="cities__right-section">
-              {!isOffersEmpty && <CityMap blockName={'cities'} cityOffersList={offersByCity} selectedOffer={selectedOffer} />}
+              {!isOffersEmpty && <CityMap blockName={'cities'} cityOffersList={offersByCity} selectedOfferId={selectedOfferId} />}
             </div>
           </div>
         </div>
