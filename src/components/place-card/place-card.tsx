@@ -5,11 +5,12 @@ import clsx from 'clsx';
 import Rating from '../rating/rating';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '@/const';
+import { capitalizeFirst } from '@/utils/utils';
 
 type PlaceCardProp = {
   offer: OfferListItem;
   viewType: 'city' | 'favorite' | 'nearby';
-  onChangeCardState?: (offer: OfferListItem | null) => void;
+  onOfferHover?: (offerId: string | undefined) => void;
 }
 
 interface ViewTypeClass {
@@ -54,13 +55,13 @@ const imageSize: Record<PlaceCardProp['viewType'], ImageSize> = {
   }
 };
 
-function PlaceCard({ offer, viewType, onChangeCardState = () => { } }: PlaceCardProp): JSX.Element {
+function PlaceCard({ offer, viewType, onOfferHover = () => { } }: PlaceCardProp): JSX.Element {
   const { title, type, price, rating, previewImage } = offer;
 
   return (
     <article
-      onMouseEnter={() => onChangeCardState?.(offer)}
-      onMouseLeave={() => onChangeCardState?.(null)}
+      onMouseEnter={() => onOfferHover?.(offer.id)}
+      onMouseLeave={() => onOfferHover?.(undefined)}
       className={viewTypeClass[viewType].article}
     >
       {offer.isPremium && <Mark containerClass={'place-card__mark'} />}
@@ -81,7 +82,7 @@ function PlaceCard({ offer, viewType, onChangeCardState = () => { } }: PlaceCard
         <h2 className="place-card__name">
           <Link to={generatePath(AppRoute.Offer, { id: offer.id })}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizeFirst(type)}</p>
       </div>
     </article>
   );

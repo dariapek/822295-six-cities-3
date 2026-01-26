@@ -1,4 +1,4 @@
-import { calculateOfferRating } from '@/utils/offer.utils';
+import { calculateOfferRating } from '@/utils/utils';
 import clsx from 'clsx';
 
 type RatingProps = {
