@@ -1,7 +1,7 @@
 import PrivateRoute from '@/components/private-route/private-route';
 import { AppRoute, FirstElementIndex, LocationNames } from '@/const';
 import FavoritesPage from '@/pages/favorites-page';
-import LoginPage from '@/pages/login-page';
+import LoginPage from '@/pages/login-page/login-page';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import OfferPage from '@/pages/offer-page';
 import MainPage from '@/pages/main-page';

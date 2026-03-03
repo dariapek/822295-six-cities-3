@@ -3,7 +3,14 @@ import { OfferListItem } from '@/types/offer';
 import { AppDispatch, State } from '@/types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { loadOffers, loadOffersError, requireAuthorization, setError, setOffersDataLoadingStatus } from './actions';
+import {
+  loadOffers,
+  loadOffersError,
+  requireAuthorization,
+  setError,
+  setOffersDataLoadingStatus,
+  setUserData,
+} from './actions';
 import { store } from './';
 import { AuthData } from '@/types/auth-data';
 import { dropToken, saveToken } from '@/services/token';
@@ -67,10 +74,12 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async ({ email, password }, { dispatch, extra: api }) => {
-    const { data: { token } } = await api.post<UserData>('/login', { email, password });
+    const { data } = await api.post<UserData>('/login', { email, password });
 
-    saveToken(token);
+    saveToken(data.token);
+    dispatch(setUserData(data));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+
   },
 );
 

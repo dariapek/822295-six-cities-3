@@ -6,10 +6,12 @@ import {
   loadOffersError,
   requireAuthorization,
   setError,
-  setOffersDataLoadingStatus
+  setOffersDataLoadingStatus,
+  setUserData,
 } from './actions';
 import { AuthorizationStatus, LocationName, SortingOption } from '@/const';
 import { OfferListItem } from '@/types/offer';
+import { UserData } from '@/types/user-data';
 
 type InitialState = {
   authorizationStatus: AuthorizationStatus;
@@ -19,6 +21,7 @@ type InitialState = {
   isOffersDataLoading: boolean;
   error: string | null;
   loadOffersError: string | null;
+  userData: UserData | null;
 }
 
 const initialState: InitialState = {
@@ -29,6 +32,7 @@ const initialState: InitialState = {
   isOffersDataLoading: false,
   error: null,
   loadOffersError: null,
+  userData: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -53,6 +57,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffersError, (state, action) => {
       state.loadOffersError = action.payload;
+    })
+    .addCase(setUserData, (state, action) => {
+      state.userData = action.payload;
     });
 });
 

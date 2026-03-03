@@ -1,15 +1,31 @@
 import { AppRoute } from '@/const';
 import { useAppDispatch } from '@/hooks';
 import { loginAction } from '@/store/api-actions';
-import { useRef } from 'react';
+import clsx from 'clsx';
+import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import './login-page.css';
 
 function LoginPage(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
+  const [passwordError, setPasswordError] = useState<string>('');
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).+$/;
+
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const password = evt.target.value;
+
+    if (!passwordRegex.test(password)) {
+      setPasswordError('Password must contain at least one letter and one number');
+    } else {
+      setPasswordError('');
+    }
+  };
 
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -20,6 +36,11 @@ function LoginPage(): JSX.Element {
 
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+
+    if (!passwordRegex.test(password)) {
+      setPasswordError('Password must contain at least one letter and one number');
+      return;
+    }
 
     const resultAction = await dispatch(loginAction({ email, password }));
 
@@ -68,13 +89,18 @@ function LoginPage(): JSX.Element {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
+                  onChange={handleChange}
+                  className={clsx('login__input', 'form__input', { 'form__input--error': passwordError })}
                   ref={passwordRef}
-                  className="login__input form__input"
                   type="password"
                   name="password"
                   placeholder="Password"
                   required
                 />
+
+                {passwordError && (
+                  <p className="form__error">{passwordError}</p>
+                )}
               </div>
 
               <button className="login__submit form__submit button" type="submit">Sign in</button>
