@@ -8,7 +8,7 @@ import Rating from '@/components/rating/rating';
 import ReviewList from '@/components/review-list/review-list';
 import { AppRoute } from '@/const';
 import { useAppSelector } from '@/hooks';
-import { getOffers } from '@/store/offers-data/offers-data.selectors';
+import { getOffers } from '@/store/data/data.selectors';
 import { capitalize } from '@/utils/utils';
 import { Navigate, useLocation } from 'react-router-dom';
 

@@ -1,7 +1,7 @@
 import { NameSpace } from '@/const';
-import { fetchOffersAction } from '../api-actions';
 import { OfferListItem } from '@/types/offer';
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchOffersAction } from './data.api';
 
 type OffersData = {
   offers: Array<OfferListItem>;

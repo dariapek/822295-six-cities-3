@@ -1,7 +1,7 @@
 import { SortingOptionL10n, SortingOptions } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { getSortingOption } from '@/store/app/app-actions.selectors';
-import { changeSortingOption } from '@/store/app/app-actions.slice';
+import { getSortingOption } from '@/store/app/app.selectors';
+import { changeSortingOption } from '@/store/app/app.slice';
 import clsx from 'clsx';
 import { useState } from 'react';
 

@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/hooks';
-import { fetchOffersAction } from '@/store/api-actions';
 import './full-page-error.css';
+import { fetchOffersAction } from '@/store/data/data.api';
 
 function FullPageError(): JSX.Element {
   const dispatch = useAppDispatch();

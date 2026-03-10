@@ -1,8 +1,8 @@
 import {combineReducers} from '@reduxjs/toolkit';
 import {NameSpace} from '../const';
-import { userProcess } from './user-process/user-process.slice';
-import { offersData } from './offers-data/offers-data.slice';
-import { appActions } from './app/app-actions.slice';
+import { userProcess } from './user/user.slice';
+import { offersData } from './data/data.slice';
+import { appActions } from './app/app.slice';
 
 
 export const rootReducer = combineReducers({

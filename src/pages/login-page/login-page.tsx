@@ -1,10 +1,15 @@
 import { AppRoute } from '@/const';
 import { useAppDispatch } from '@/hooks';
-import { loginAction } from '@/store/api-actions';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './login-page.css';
+import { loginAction } from '@/store/user/user.api';
+import Header from '@/components/header/header';
+import { toast } from 'react-toastify';
+
+const PasswordRegex = /^(?=.*[A-Za-z])(?=.*\d).+$/;
+
 
 function LoginPage(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -15,12 +20,10 @@ function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).+$/;
-
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const password = evt.target.value;
 
-    if (!passwordRegex.test(password)) {
+    if (!PasswordRegex.test(password)) {
       setPasswordError('Password must contain at least one letter and one number');
     } else {
       setPasswordError('');
@@ -37,31 +40,22 @@ function LoginPage(): JSX.Element {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    if (!passwordRegex.test(password)) {
+    if (!PasswordRegex.test(password)) {
       setPasswordError('Password must contain at least one letter and one number');
       return;
     }
 
-    const resultAction = await dispatch(loginAction({ email, password }));
-
-    if (loginAction.fulfilled.match(resultAction)) {
+    try {
+      await dispatch(loginAction({ email, password })).unwrap();
       navigate(AppRoute.Root);
+    } catch (error) {
+      toast.error('Login failed. Please check your credentials and try again.');
     }
   };
 
   return (
     <div className="page page--gray page--login">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to={AppRoute.Root}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header showNavigation={false} />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">

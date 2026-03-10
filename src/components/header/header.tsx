@@ -1,7 +1,11 @@
 import Logo from '../logo/logo';
 import User from '../user/user';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  showNavigation?: boolean;
+}
+
+function Header({showNavigation = true}: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -9,11 +13,13 @@ function Header(): JSX.Element {
           <div className="header__left">
             <Logo type={'header'} />
           </div>
-          <nav className="header__nav">
-            <ul className="header__nav-list">
-              <User />
-            </ul>
-          </nav>
+          {showNavigation && (
+            <nav className="header__nav">
+              <ul className="header__nav-list">
+                <User />
+              </ul>
+            </nav>
+          )}
         </div>
       </div>
     </header>

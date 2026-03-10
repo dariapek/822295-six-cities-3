@@ -1,7 +1,7 @@
 import { AuthorizationStatus, NameSpace } from '@/const';
 import { createSlice } from '@reduxjs/toolkit';
-import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
 import { UserData } from '@/types/user-data';
+import { checkAuthAction, loginAction, logoutAction } from './user.api';
 
 type UserProcess = {
   authorizationStatus: AuthorizationStatus;
@@ -21,6 +21,8 @@ export const userProcess = createSlice({
     builder
       .addCase(checkAuthAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
+        state.userData = action.payload;
+
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;

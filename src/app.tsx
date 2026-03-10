@@ -3,7 +3,7 @@ import { router } from '@/router/router';
 import { useAppSelector } from './hooks';
 import FullPageLoading from './components/full-page-loading/full-page-loading';
 import FullPageError from './components/full-page-error/full-page-error';
-import { getIsOffersDataLoading, getLoadOffersError } from './store/offers-data/offers-data.selectors';
+import { getIsOffersDataLoading, getLoadOffersError } from './store/data/data.selectors';
 
 function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);

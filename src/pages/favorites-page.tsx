@@ -3,7 +3,7 @@ import FavoriteList from '@/components/favorite-list/favorite-list';
 import Header from '@/components/header/header';
 import Logo from '@/components/logo/logo';
 import { useAppSelector } from '@/hooks';
-import { getOffers } from '@/store/offers-data/offers-data.selectors';
+import { getOffers } from '@/store/data/data.selectors';
 import clsx from 'clsx';
 
 function FavoritesPage(): JSX.Element {
