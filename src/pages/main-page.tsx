@@ -10,7 +10,7 @@ import { changeCurrentCity } from '@/store/app/app.slice';
 import { getOffers } from '@/store/data/data.selectors';
 import { getCurrentOffers, isLocationName } from '@/utils/utils';
 import clsx from 'clsx';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function MainPage(): JSX.Element {
@@ -36,9 +36,9 @@ function MainPage(): JSX.Element {
 
   const isOffersEmpty = currentOffers.length === 0;
 
-  const handleOfferHover = (offerId: string | undefined) => {
+  const handleOfferHover = useCallback((offerId: string | undefined) => {
     setSelectedOfferId(offerId);
-  };
+  }, []);
 
   return (
     <div className={clsx('page', 'page--gray', 'page--main')}>

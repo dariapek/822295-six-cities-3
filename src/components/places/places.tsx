@@ -3,6 +3,7 @@ import PlaceCardList from '../place-card-list/place-card-list';
 import Sorting from '../sorting/sorting';
 import { OfferListItem } from '@/types/offer';
 import { LocationName } from '@/const';
+import { memo } from 'react';
 
 type PlacesProp = {
   offers: Array<OfferListItem>;
@@ -21,4 +22,6 @@ function Places({ offers, currentCity, onOfferHover }: PlacesProp): JSX.Element 
   );
 }
 
-export default Places;
+const MemoizedPlaces = memo(Places);
+
+export default MemoizedPlaces;
