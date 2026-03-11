@@ -5,10 +5,12 @@ import PlacesEmpty from '@/components/places-empty/places-empty';
 import Places from '@/components/places/places';
 import { AppRoute, LocationName } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { changeCurrentCity } from '@/store/actions';
+import { getSortingOption } from '@/store/app/app.selectors';
+import { changeCurrentCity } from '@/store/app/app.slice';
+import { getOffers } from '@/store/data/data.selectors';
 import { getCurrentOffers, isLocationName } from '@/utils/utils';
 import clsx from 'clsx';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function MainPage(): JSX.Element {
@@ -16,8 +18,8 @@ function MainPage(): JSX.Element {
   const navigate = useNavigate();
 
   const city = useParams().city as LocationName;
-  const offers = useAppSelector((state) => state.offers);
-  const sortingOption = useAppSelector((state) => state.sortingOption);
+  const offers = useAppSelector(getOffers);
+  const sortingOption = useAppSelector(getSortingOption);
 
   const [selectedOfferId, setSelectedOfferId] = useState<string | undefined>(undefined);
 
@@ -34,9 +36,9 @@ function MainPage(): JSX.Element {
 
   const isOffersEmpty = currentOffers.length === 0;
 
-  const handleOfferHover = (offerId: string | undefined) => {
+  const handleOfferHover = useCallback((offerId: string | undefined) => {
     setSelectedOfferId(offerId);
-  };
+  }, []);
 
   return (
     <div className={clsx('page', 'page--gray', 'page--main')}>

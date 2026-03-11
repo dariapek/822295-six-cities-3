@@ -1,11 +1,12 @@
 import { AppRoute, AuthorizationStatus } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { logoutAction } from '@/store/api-actions';
+import { logoutAction } from '@/store/user/user.api';
+import { getAuthorizationStatus, getUserData } from '@/store/user/user.selectors';
 import { Link } from 'react-router-dom';
 
 function User(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const userEmail = useAppSelector((state) => state.userData?.email);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userEmail = useAppSelector(getUserData)?.email;
 
   const dispatch = useAppDispatch();
 

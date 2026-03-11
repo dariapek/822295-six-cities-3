@@ -42,3 +42,9 @@ export const SortingOptionL10n = {
   [SortingOption.PriceLowToHigh]: 'Price: high to low',
   [SortingOption.TopRatedFirst]: 'Top rated first'
 };
+
+export enum NameSpace {
+  App = 'APP',
+  Data = 'DATA',
+  User = 'USER',
+}

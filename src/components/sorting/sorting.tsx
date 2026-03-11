@@ -1,6 +1,7 @@
 import { SortingOptionL10n, SortingOptions } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { changeSort } from '@/store/actions';
+import { getSortingOption } from '@/store/app/app.selectors';
+import { changeSortingOption } from '@/store/app/app.slice';
 import clsx from 'clsx';
 import { useState } from 'react';
 
@@ -8,7 +9,7 @@ function Sorting(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
-  const activeOption = useAppSelector((state) => state.sortingOption);
+  const activeOption = useAppSelector(getSortingOption);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -26,9 +27,8 @@ function Sorting(): JSX.Element {
             className={clsx('places__option', (option === activeOption) && 'places__option places__option--active')}
             tabIndex={0}
             onClick={() => {
-              changeSort(option);
               setIsOpen(false);
-              dispatch(changeSort(option));
+              dispatch(changeSortingOption(option));
             }}
           >
             {SortingOptionL10n[option]}

@@ -8,6 +8,7 @@ import Rating from '@/components/rating/rating';
 import ReviewList from '@/components/review-list/review-list';
 import { AppRoute } from '@/const';
 import { useAppSelector } from '@/hooks';
+import { getOffers } from '@/store/data/data.selectors';
 import { capitalize } from '@/utils/utils';
 import { Navigate, useLocation } from 'react-router-dom';
 
@@ -22,7 +23,7 @@ const galleryImages: string[] = [
 
 function OfferPage(): JSX.Element {
   const offerId = useLocation().pathname.replace('/offer/', '');
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(getOffers);
   const currentOffer = offers.find((offer) => (offer.id === offerId));
 
   if (!currentOffer) {
