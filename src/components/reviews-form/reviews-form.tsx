@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import StarInput from '../star-input/star-input';
+import { ReviewFormData } from '@/types/review';
 
-type ReviewFormData = {
-  rating: number;
-  review: string;
+type ReviewsFormProps = {
+  sendFormData: (comments: ReviewFormData) => Promise<void>;
 }
 
 const StarsCount = 5;
 
-function ReviewsForm(): JSX.Element {
+function ReviewsForm({ sendFormData }: ReviewsFormProps): JSX.Element {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ReviewFormData>({
     rating: 0,
-    review: '',
+    comment: '',
   });
 
   const fieldChangeHandle = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -19,7 +20,7 @@ function ReviewsForm(): JSX.Element {
 
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: name === 'rating' ? Number(value) : value,
     });
   };
 
@@ -27,19 +28,28 @@ function ReviewsForm(): JSX.Element {
 
   const isFormValid =
     formData.rating > 0 &&
-    formData.review.length >= 50 &&
-    formData.review.length <= 300;
+    formData.comment.length >= 50 &&
+    formData.comment.length <= 300;
 
   const cleanUpForm = () => {
     setFormData({
       rating: 0,
-      review: '',
+      comment: '',
     });
   };
 
   const onFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    cleanUpForm();
+
+    setIsSubmitting(true);
+
+    sendFormData(formData)
+      .then(() => {
+        cleanUpForm();
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   return (
@@ -52,18 +62,27 @@ function ReviewsForm(): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
       <div className="reviews__rating-form form__rating">
-        {starsArray.map((starValue) => <StarInput key={starValue} value={starValue} fieldChangeHandle={fieldChangeHandle} />)}
+        {starsArray.map((starValue) => (
+          <StarInput
+            key={starValue}
+            value={starValue}
+            disabled={isSubmitting}
+            fieldChangeHandle={fieldChangeHandle}
+            checked={formData.rating === starValue}
+          />
+        ))}
       </div>
 
       <textarea
         onChange={fieldChangeHandle}
-        value={formData.review}
+        value={formData.comment}
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
         minLength={50}
         maxLength={300}
         placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={isSubmitting}
       >
       </textarea>
 
@@ -72,7 +91,7 @@ function ReviewsForm(): JSX.Element {
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button
-          disabled={!isFormValid}
+          disabled={!isFormValid || isSubmitting}
           className="reviews__submit form__submit button"
           type="submit"
         >Submit

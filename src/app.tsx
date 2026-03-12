@@ -4,6 +4,8 @@ import { useAppSelector } from './hooks';
 import FullPageLoading from './components/full-page-loading/full-page-loading';
 import FullPageError from './components/full-page-error/full-page-error';
 import { getIsOffersDataLoading, getLoadOffersError } from './store/data/data.selectors';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
@@ -17,7 +19,12 @@ function App(): JSX.Element {
     return <FullPageLoading />;
   }
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </>
+  );
 }
 
 export default App;

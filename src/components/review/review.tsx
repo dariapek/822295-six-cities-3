@@ -1,22 +1,31 @@
+import { UserComment } from '@/types/offer';
 import Rating from '../rating/rating';
+import dayjs from 'dayjs';
 
-function Review(): JSX.Element {
+type ReviewProps = {
+  comment: UserComment;
+}
+
+function Review({ comment }: ReviewProps): JSX.Element {
+  const commentDate = dayjs(comment.date).format('MMMM YYYY');
+  const dateTime = dayjs(comment.date).format('YYYY-MM-DD');
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
+          <img className="reviews__avatar user__avatar" src={comment.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
         </div>
         <span className="reviews__user-name">
-          Max
+          {comment.user.name}
         </span>
       </div>
       <div className="reviews__info">
-        <Rating rating={4} blockClass={'reviews'} />
+        <Rating rating={comment.rating} blockClass={'reviews'} />
         <p className="reviews__text">
-          A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+          {comment.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+        <time className="reviews__time" dateTime={dateTime}>{commentDate}</time>
       </div>
     </li>
   );
