@@ -66,9 +66,9 @@ function PlaceCard({ offer, viewType, onOfferHover = () => { } }: PlaceCardProp)
     >
       {offer.isPremium && <Mark containerClass={'place-card__mark'} />}
       <div className={viewTypeClass[viewType].imageWrapper}>
-        <a href="#">
+        <Link to={generatePath(AppRoute.Offer, { id: offer.id })}>
           <img className="place-card__image" src={previewImage} width={imageSize[viewType].width} height={imageSize[viewType].height} alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className={clsx('place-card__info', viewTypeClass[viewType].cardInfo ?? '')}>
         <div className="place-card__price-wrapper">

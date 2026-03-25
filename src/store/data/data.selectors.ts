@@ -9,5 +9,6 @@ export const getCurrentOffer = (state: State) => state[NameSpace.Data].currentOf
 export const getIsCurrentOfferLoading = (state: State) => state[NameSpace.Data].isCurrentOfferLoading;
 export const getLoadCurrentOfferError = (state: State) => state[NameSpace.Data].loadCurrentOfferError;
 export const getIsOfferPageNotFound = (state: State) => state[NameSpace.Data].isOfferPageNotFound;
+export const getIsNearbyOffersLoading = (state: State) => state[NameSpace.Data].isNearbyOffersLoading;
 
 export const getNearbyOffers = (state: State) => state[NameSpace.Data].nearbyOffers;

@@ -3,6 +3,7 @@ import StarInput from '../star-input/star-input';
 import { ReviewFormData } from '@/types/review';
 import { useAppDispatch } from '@/hooks';
 import { fetchUserCommentsAction, submitUserCommentAction } from '@/store/user/user.api';
+import { toast } from 'react-toastify';
 
 type ReviewsFormProps = {
   offerId: string;
@@ -56,10 +57,9 @@ function ReviewsForm({ offerId }: ReviewsFormProps): JSX.Element {
         comment: formData.comment,
         rating: formData.rating
       }))
-      .then(() => {
-        cleanUpForm();
-        dispatch(fetchUserCommentsAction(offerId));
-      })
+      .unwrap()
+      .then(cleanUpForm)
+      .catch(() => toast.error('Something went wrong. Please try later'))
       .finally(() => setIsSubmitting(false));
   };
 

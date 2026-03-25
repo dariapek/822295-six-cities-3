@@ -1,5 +1,6 @@
 import Bookmark from '@/components/bookmark/bookmark';
 import CityMap from '@/components/city-map/city-map';
+import FullPageError from '@/components/full-page-error/full-page-error';
 import FullPageLoading from '@/components/full-page-loading/full-page-loading';
 import Gallery from '@/components/gallery/gallery';
 import Header from '@/components/header/header';
@@ -10,7 +11,14 @@ import ReviewList from '@/components/review-list/review-list';
 import { AppRoute } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { fetchNearbyOffersAction, fetchOfferAction } from '@/store/data/data.api';
-import { getCurrentOffer, getIsCurrentOfferLoading, getIsOfferPageNotFound, getLoadCurrentOfferError, getNearbyOffers } from '@/store/data/data.selectors';
+import {
+  getCurrentOffer,
+  getIsCurrentOfferLoading,
+  getIsNearbyOffersLoading,
+  getIsOfferPageNotFound,
+  getLoadCurrentOfferError,
+  getNearbyOffers,
+} from '@/store/data/data.selectors';
 import { OfferListItem } from '@/types/offer';
 import { capitalize } from '@/utils/utils';
 import { useEffect } from 'react';
@@ -28,6 +36,7 @@ function OfferPage(): JSX.Element {
   const isCurrentOfferLoading = useAppSelector(getIsCurrentOfferLoading);
   const loadCurrentOfferError = useAppSelector(getLoadCurrentOfferError);
   const isOfferPageNotFound = useAppSelector(getIsOfferPageNotFound);
+  const isNearbyOffersLoading = useAppSelector(getIsNearbyOffersLoading);
 
   const nearbyOffers = useAppSelector(getNearbyOffers);
   const mapOffers = [...nearbyOffers.slice(0, MAX_NEARBY_PINS), currentOffer] as Array<OfferListItem>;
@@ -45,12 +54,12 @@ function OfferPage(): JSX.Element {
     return <FullPageLoading />;
   }
 
-  if (!nearbyOffers.length) {
+  if (!nearbyOffers.length && !isNearbyOffersLoading) {
     toast.warning('Failed to load nearby offers. Please try again later.');
   }
 
   if (loadCurrentOfferError !== null) {
-    toast.warning('Failed to load offer. Please try again later.');
+    return <FullPageError />;
   }
 
   return (

@@ -8,14 +8,12 @@ type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   userData: UserData | null;
   userComments: Array<UserComment>;
-  submitUserCommentError: string | null;
 };
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
   userComments: [],
-  submitUserCommentError: null,
 };
 
 export const userProcess = createSlice({
@@ -40,16 +38,6 @@ export const userProcess = createSlice({
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-      })
-      .addCase(fetchUserCommentsAction.fulfilled, (state, action) => {
-        state.submitUserCommentError = null;
-        state.userComments = action.payload;
-      })
-      .addCase(submitUserCommentAction.fulfilled, (state) => {
-        state.submitUserCommentError = null;
-      })
-      .addCase(submitUserCommentAction.rejected, (state) => {
-        state.submitUserCommentError = 'Comment submit error';
       });
   }
 });

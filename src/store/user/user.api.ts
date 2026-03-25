@@ -66,11 +66,13 @@ export const submitUserCommentAction = createAsyncThunk<
   ThunkOptions
 >(
   'data/submitUserComment',
-  async ({ offerId, comment, rating }, { extra: api }) => {
+  async ({ offerId, comment, rating }, { extra: api, dispatch }) => {
     const { data } = await api.post<UserComment>(`/comments/${offerId}`, {
       comment,
       rating,
     });
+
+    dispatch(fetchUserCommentsAction(offerId));
 
     return data;
   },

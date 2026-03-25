@@ -12,6 +12,7 @@ type OffersData = {
   isCurrentOfferLoading: boolean;
   loadCurrentOfferError: string | null;
   isOfferPageNotFound: boolean;
+  isNearbyOffersLoading: boolean;
 
   nearbyOffers: Array<OfferListItem>;
 };
@@ -25,6 +26,7 @@ const initialState: OffersData = {
   isCurrentOfferLoading: false,
   loadCurrentOfferError: null,
   isOfferPageNotFound: false,
+  isNearbyOffersLoading: false,
 
   nearbyOffers: [],
 };
@@ -68,12 +70,15 @@ export const offersData = createSlice({
       })
       .addCase(fetchNearbyOffersAction.pending, (state) => {
         state.nearbyOffers = [];
+        state.isNearbyOffersLoading = true;
       })
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
+        state.isNearbyOffersLoading = false;
       })
       .addCase(fetchNearbyOffersAction.rejected, (state) => {
         state.nearbyOffers = [];
+        state.isNearbyOffersLoading = false;
       });
   }
 });
